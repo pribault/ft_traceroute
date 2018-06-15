@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 14:44:09 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/15 23:25:28 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 23:49:38 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	init_env(void)
 	g_e.sequence = 0;
 	g_e.socket = socket_new();
 	g_e.timeout = DEFAULT_TIMEOUT;
+	g_e.hops = DEFAULT_HOPS;
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_ADD_CB, &client_add);
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_DEL_CB, &client_del);
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_EXCEPTION_CB,
@@ -113,6 +114,8 @@ int		main(int argc, char **argv)
 	{
 		if (check_malloc() == MALLOC_CORRUPTED)
 			ft_error(2, ERROR_MEMORY_CORRUPTED, NULL);
+		if (g_e.sequence / g_e.probes >= g_e.hops)
+			exit(0);
 		socket_poll_events(g_e.socket, ALLOW_READ | ALLOW_WRITE);
 		manage_requests();
 	}

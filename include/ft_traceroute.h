@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/08 16:24:21 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/15 23:24:24 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 23:50:23 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@
 */
 
 # define DEFAULT_PACKET_SIZE	56
-# define DEFAULT_TIMEOUT		1000000
+# define DEFAULT_TIMEOUT		5000000
 # define DEFAULT_PROBES			3
+# define DEFAULT_HOPS			30
 
 /*
 *************
@@ -91,6 +92,7 @@ typedef struct		s_env
 	struct timeval	prev;
 	size_t			packet_size;
 	size_t			timeout;
+	uint8_t			hops;
 	uint8_t			probes;
 	uint8_t			sequence;
 	uint8_t			opt;
@@ -167,6 +169,8 @@ void				send_ping_request(t_client *client);
 void				icmp_echo_reply(struct iphdr *iphdr,
 					struct icmphdr *icmphdr, size_t size);
 void				icmp_time_exceeded(struct iphdr *iphdr,
+					struct icmphdr *icmphdr, size_t size);
+void				icmp_dest_unreach(struct iphdr *iphdr,
 					struct icmphdr *icmphdr, size_t size);
 void				icmp_other(struct iphdr *iphdr,
 					struct icmphdr *icmphdr, size_t size);

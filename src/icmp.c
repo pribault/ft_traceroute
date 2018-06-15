@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 22:40:41 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/15 23:20:05 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 23:39:57 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	treat_icmphdr(struct iphdr *iphdr,
 {
 	static t_icmp_hdlr	hdlrs[] = {
 		{ICMP_ECHOREPLY, &icmp_echo_reply},
+		{ICMP_DEST_UNREACH, &icmp_dest_unreach},
 		{ICMP_TIME_EXCEEDED, &icmp_time_exceeded}
 	};
 	size_t				i;
