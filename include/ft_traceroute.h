@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/08 16:24:21 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/15 22:21:00 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 23:24:24 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 */
 
 # define DEFAULT_PACKET_SIZE	56
-# define DEFAULT_TIMEOUT		10000000
+# define DEFAULT_TIMEOUT		1000000
 # define DEFAULT_PROBES			3
 
 /*
@@ -175,7 +175,7 @@ void				icmp_other(struct iphdr *iphdr,
 **	others
 */
 
-void				set_timeout(struct timeval *timeout, struct timeval *now);
+char				*get_hostname(struct iphdr *iphdr);
 char				*get_client_addr(t_client *client);
 
 extern t_env	g_e;
