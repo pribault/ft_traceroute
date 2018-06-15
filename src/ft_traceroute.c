@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 14:44:09 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/08 22:28:05 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 22:21:16 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	init_env(void)
 {
 	g_e.packet_size = DEFAULT_PACKET_SIZE;
 	g_e.probes = DEFAULT_PROBES;
-	g_e.ttl = 1;
+	g_e.sequence = 0;
 	g_e.socket = socket_new();
 	g_e.timeout = DEFAULT_TIMEOUT;
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_ADD_CB, &client_add);

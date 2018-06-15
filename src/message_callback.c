@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 14:44:09 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/08 20:08:51 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 22:23:00 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	msg_send(t_socket *socket, t_client *client, t_msg *msg)
 	(void)socket;
 	(void)client;
 	(void)msg;
+	free(msg->ptr);
+	gettimeofday(&g_e.prev, NULL);
 }
 
 void	msg_trash(t_socket *socket, t_client *client, t_msg *msg)

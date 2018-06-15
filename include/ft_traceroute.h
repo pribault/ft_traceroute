@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/08 16:24:21 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/08 22:27:49 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 22:21:00 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,16 @@ typedef enum		e_ipv4_protocol
 ******************
 */
 
-typedef struct		s_data
-{
-	struct timeval	timestamp;
-	t_msg			msg;
-	size_t			seq;
-}					t_data;
-
 typedef struct		s_env
 {
 	t_socket		*socket;
 	char			*address;
 	t_client		*client;
+	struct timeval	prev;
 	size_t			packet_size;
 	size_t			timeout;
 	uint8_t			probes;
-	uint8_t			ttl;
+	uint8_t			sequence;
 	uint8_t			opt;
 }					t_env;
 

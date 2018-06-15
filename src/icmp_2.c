@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 22:40:41 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/08 22:36:13 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 22:34:42 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,18 @@ void	icmp_time_exceeded(struct iphdr *iphdr,
 		sizeof(struct iphdr)))->un.echo.id != getpid())
 		return ;
 	gettimeofday(&now, NULL);
-	if ((host = gethostbyaddr(&iphdr->saddr, 4, IPV4)))
-		printf("%2hu %s (%s)\n", ((struct icmphdr *)((void*)&icmphdr[1] +
-		sizeof(struct iphdr)))->un.echo.sequence, host->h_name,
-		inet_ntop(IPV4, &iphdr->saddr, buffer, sizeof(buffer)));
-	else
-		printf("%2hu %s (%s)\n", ((struct icmphdr *)((void*)&icmphdr[1] +
-		sizeof(struct iphdr)))->un.echo.sequence, inet_ntop(IPV4,
-		&iphdr->saddr, hostname, sizeof(hostname)), inet_ntop(IPV4,
-		&iphdr->saddr, buffer, sizeof(buffer)));
-	g_e.ttl++;
+	if (!(g_e.sequence % g_e.probes))
+	{
+		if ((host = gethostbyaddr(&iphdr->saddr, 4, IPV4)))
+			ft_strcpy(hostname, host->h_name);
+		else
+			inet_ntop(IPV4, &iphdr->saddr, hostname, sizeof(hostname));
+		printf("%2hu  %s (%s)", (uint16_t)(g_e.sequence / g_e.probes + 1),
+		hostname, inet_ntop(IPV4, &iphdr->saddr, buffer, sizeof(buffer)));
+	}
+	printf("  %.3f ms", (float)(now.tv_sec - g_e.prev.tv_sec) * 1000 +
+		(float)(now.tv_usec - g_e.prev.tv_usec) / 1000);
+	if (!(++g_e.sequence % g_e.probes))
+		printf("\n");
 	send_ping_request(g_e.client);
 }

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:04:29 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/08 22:41:45 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/15 22:22:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	fill_ip_header(t_client *client, struct iphdr *iphdr)
 	g_e.packet_size;
 	iphdr->id = 0;
 	iphdr->frag_off = 0;
-	iphdr->ttl = (g_e.ttl - 1) / g_e.probes + 1;
+	iphdr->ttl = g_e.sequence / g_e.probes + 1;
 	iphdr->protocol = IPV4_PROTOCOL_ICMP;
 	ft_memcpy(&iphdr->daddr,
 		&((struct sockaddr_in *)&client->addr.addr)->sin_addr, 4);
@@ -33,7 +33,7 @@ void	fill_icmp_header(struct icmphdr *icmphdr)
 {
 	icmphdr->type = ICMP_ECHO;
 	icmphdr->un.echo.id = getpid();
-	icmphdr->un.echo.sequence = (g_e.ttl - 1) / g_e.probes;
+	icmphdr->un.echo.sequence = g_e.sequence;
 	icmphdr->checksum = compute_sum(icmphdr, (sizeof(struct icmphdr) +
 		g_e.packet_size));
 	icmphdr->checksum = (icmphdr->checksum << 8) | (icmphdr->checksum >> 8);
