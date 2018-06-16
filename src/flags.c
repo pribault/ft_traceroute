@@ -25,6 +25,7 @@ void	get_flags(int argc, char **argv)
 		{"wait", 1, {PARAM_FLOAT}, (void *)&get_timeout},
 		{"max-hops", 1, {PARAM_UNSIGNED}, (void *)get_max_hops},
 		{"first", 1, {PARAM_UNSIGNED}, (void *)&get_first_ttl},
+		{"source", 1, {PARAM_STR}, (void *)get_source_address},
 		{NULL, 0, {0}, NULL}
 	};
 

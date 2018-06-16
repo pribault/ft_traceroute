@@ -93,6 +93,7 @@ typedef struct		s_env
 	t_client		*client;
 	struct timeval	prev;
 	__be32			prev_addr;
+	struct in_addr	source;
 	size_t			packet_size;
 	size_t			timeout;
 	uint8_t			hops;
@@ -130,6 +131,7 @@ void				get_verbose(t_env *env, char **args, int n);
 void				get_timeout(t_env *env, char **args, int n);
 void				get_max_hops(t_env *env, char **args, int n);
 void				get_first_ttl(t_env *env, char **args, int n);
+void				get_source_address(t_env *env, char **args, int n);
 void				print_usage(void);
 
 /*

@@ -65,6 +65,7 @@ void	init_env(void)
 	g_e.socket = socket_new();
 	g_e.timeout = DEFAULT_TIMEOUT;
 	g_e.hops = DEFAULT_HOPS;
+	inet_pton(AF_INET, "0.0.0.0", &g_e.source);
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_ADD_CB, &client_add);
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_DEL_CB, &client_del);
 	socket_set_callback(g_e.socket, SOCKET_CLIENT_EXCEPTION_CB,

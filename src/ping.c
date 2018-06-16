@@ -23,6 +23,7 @@ void	fill_ip_header(t_client *client, struct iphdr *iphdr)
 	iphdr->frag_off = 0;
 	iphdr->ttl = g_e.sequence / g_e.probes + 1;
 	iphdr->protocol = IPV4_PROTOCOL_ICMP;
+	ft_memcpy(&iphdr->saddr, &g_e.source, 4);
 	ft_memcpy(&iphdr->daddr,
 		&((struct sockaddr_in *)&client->addr.addr)->sin_addr, 4);
 	endian_iphdr(iphdr);
