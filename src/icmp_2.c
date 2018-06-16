@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 22:40:41 by pribault          #+#    #+#             */
-/*   Updated: 2018/06/15 23:43:05 by pribault         ###   ########.fr       */
+/*   Updated: 2018/06/16 13:31:24 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	icmp_time_exceeded(struct iphdr *iphdr,
 	if (size < sizeof(struct icmphdr) + sizeof(struct iphdr) + 8)
 		return ((g_e.opt & OPT_VERBOSE) ? ft_error(2,
 			ERROR_INVALID_DEST_UNREACH, NULL) : (void)0);
-	if (((struct icmphdr *)((void*)&icmphdr[1] +
+		if (((struct icmphdr *)((void*)&icmphdr[1] +
 		sizeof(struct iphdr)))->un.echo.id != getpid() ||
 		g_e.sequence != ((struct icmphdr *)((void*)&icmphdr[1] +
 			sizeof(struct iphdr)))->un.echo.sequence)
@@ -39,7 +39,6 @@ void	icmp_time_exceeded(struct iphdr *iphdr,
 	g_e.prev_addr = iphdr->saddr;
 	send_ping_request(g_e.client);
 }
-
 
 char	*get_icmp_dest_unreach_string(__u8 code)
 {
@@ -68,7 +67,7 @@ void	icmp_dest_unreach(struct iphdr *iphdr,
 	if (size < sizeof(struct icmphdr) + sizeof(struct iphdr) + 8)
 		return ((g_e.opt & OPT_VERBOSE) ? ft_error(2,
 			ERROR_INVALID_DEST_UNREACH, NULL) : (void)0);
-	if (((struct icmphdr *)((void*)&icmphdr[1] +
+		if (((struct icmphdr *)((void*)&icmphdr[1] +
 		sizeof(struct iphdr)))->un.echo.id != getpid() ||
 		g_e.sequence != ((struct icmphdr *)((void*)&icmphdr[1] +
 			sizeof(struct iphdr)))->un.echo.sequence)
