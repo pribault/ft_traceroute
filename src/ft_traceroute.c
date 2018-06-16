@@ -32,6 +32,7 @@ t_error	g_errors[] = {
 	{ERROR_MINIMAL_INTERVAL,
 		"cannot flood; mininal interval, allowed for user, is 200ms",
 		ERROR_EXIT},
+	{ERROR_INVALID_TTL, "first hop out of range", 0},
 	{0, NULL, 0},
 };
 

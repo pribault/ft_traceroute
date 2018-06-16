@@ -71,7 +71,8 @@ typedef enum		e_ping_errors
 	ERROR_ALLOCATION_2,
 	ERROR_CANNOT_SET_OPTION,
 	ERROR_MEMORY_CORRUPTED,
-	ERROR_MINIMAL_INTERVAL
+	ERROR_MINIMAL_INTERVAL,
+	ERROR_INVALID_TTL
 }					t_ping_errors;
 
 typedef enum		e_ipv4_protocol
@@ -128,6 +129,7 @@ void				default_getter(char *s, t_env *env);
 void				get_verbose(t_env *env, char **args, int n);
 void				get_timeout(t_env *env, char **args, int n);
 void				get_max_hops(t_env *env, char **args, int n);
+void				get_first_ttl(t_env *env, char **args, int n);
 void				print_usage(void);
 
 /*

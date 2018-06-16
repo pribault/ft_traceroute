@@ -24,6 +24,7 @@ void	get_flags(int argc, char **argv)
 		{"verbose", 0, {0}, (void *)&get_verbose},
 		{"wait", 1, {PARAM_FLOAT}, (void *)&get_timeout},
 		{"max-hops", 1, {PARAM_UNSIGNED}, (void *)get_max_hops},
+		{"first", 1, {PARAM_UNSIGNED}, (void *)&get_first_ttl},
 		{NULL, 0, {0}, NULL}
 	};
 
@@ -58,6 +59,15 @@ void	get_max_hops(t_env *env, char **args, int n)
 	(void)env;
 	(void)n;
 	g_e.hops = ft_atou(args[0]);
+}
+
+void	get_first_ttl(t_env *env, char **args, int n)
+{
+	(void)env;
+	(void)n;
+	if (!ft_atou(args[0]))
+		return (ft_error(2, ERROR_INVALID_TTL, NULL));
+	g_e.sequence = ft_atou(args[0]) * g_e.probes - g_e.probes;
 }
 
 void	get_verbose(t_env *env, char **args, int n)
