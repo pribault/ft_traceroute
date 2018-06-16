@@ -44,8 +44,9 @@
 **	default values
 */
 
-# define DEFAULT_PACKET_SIZE	56
+# define DEFAULT_PACKET_SIZE	60
 # define DEFAULT_TIMEOUT		5000000
+# define DEFAULT_START			1
 # define DEFAULT_PROBES			3
 # define DEFAULT_HOPS			30
 
@@ -64,7 +65,7 @@ typedef enum		e_ping_errors
 	ERROR_INVALID_IHL,
 	ERROR_INVALID_DEST_UNREACH,
 	ERROR_PROTOCOL_NOT_HANDLED,
-	ERROR_ADDRESS_SET,
+	ERROR_ARGS_SET,
 	ERROR_NO_ADDRESS,
 	ERROR_CANNOT_FIND_ADDRESS,
 	ERROR_ALLOCATION_2,
@@ -90,6 +91,7 @@ typedef struct		s_env
 	char			*address;
 	t_client		*client;
 	struct timeval	prev;
+	__be32			prev_addr;
 	size_t			packet_size;
 	size_t			timeout;
 	uint8_t			hops;
@@ -124,8 +126,8 @@ typedef struct		s_icmp_str
 void				get_flags(int argc, char **argv);
 void				default_getter(char *s, t_env *env);
 void				get_verbose(t_env *env, char **args, int n);
-void				get_packet_size(t_env *env, char **args, int n);
 void				get_timeout(t_env *env, char **args, int n);
+void				get_max_hops(t_env *env, char **args, int n);
 void				print_usage(void);
 
 /*

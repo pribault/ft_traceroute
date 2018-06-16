@@ -23,7 +23,7 @@ t_error	g_errors[] = {
 	{ERROR_INVALID_IHL, "invalid ihl", 0},
 	{ERROR_INVALID_DEST_UNREACH, "invalid dest unreach icmp packet", 0},
 	{ERROR_PROTOCOL_NOT_HANDLED, "protocol %u not handled", 0},
-	{ERROR_ADDRESS_SET, "error already set to %s", 0},
+	{ERROR_ARGS_SET, "error already set to %s", 0},
 	{ERROR_NO_ADDRESS, "no address set", 0},
 	{ERROR_CANNOT_FIND_ADDRESS, "cannot find address %s", ERROR_EXIT},
 	{ERROR_ALLOCATION_2, "cannot allocate memory", 0},
@@ -60,7 +60,7 @@ void	init_env(void)
 {
 	g_e.packet_size = DEFAULT_PACKET_SIZE;
 	g_e.probes = DEFAULT_PROBES;
-	g_e.sequence = 0;
+	g_e.sequence = DEFAULT_START * g_e.probes - g_e.probes;
 	g_e.socket = socket_new();
 	g_e.timeout = DEFAULT_TIMEOUT;
 	g_e.hops = DEFAULT_HOPS;
@@ -84,8 +84,8 @@ void	manage_requests(void)
 		(now.tv_usec - g_e.prev.tv_usec)) >= g_e.timeout)
 	{
 		if (!(g_e.sequence % g_e.probes))
-			printf("%2hu  ", (uint16_t)(g_e.sequence / g_e.probes + 1));
-		printf((!(++g_e.sequence % g_e.probes)) ? "*\n" : "* ");
+			printf("%2hu ", (uint16_t)(g_e.sequence / g_e.probes + 1));
+		printf((!(++g_e.sequence % g_e.probes)) ? " *\n" : " *");
 		send_ping_request(g_e.client);
 	}
 	else

@@ -82,18 +82,19 @@ void	icmp_echo_reply(struct iphdr *iphdr,
 		return ;
 	gettimeofday(&now, NULL);
 	if (!(g_e.sequence % g_e.probes))
-		printf("%2hu  %s (%s)", (uint16_t)(g_e.sequence / g_e.probes + 1),
-			get_hostname(iphdr), inet_ntop(IPV4, &iphdr->saddr, buffer,
-			sizeof(buffer)));
-	printf("  %.3f ms", (float)(now.tv_sec - g_e.prev.tv_sec) * 1000 +
+		printf("%2hu  ", (uint16_t)(g_e.sequence / g_e.probes + 1));
+	if (!(g_e.sequence % g_e.probes) || iphdr->saddr != g_e.prev_addr)
+		printf("%s (%s) ", get_hostname(iphdr), inet_ntop(IPV4, &iphdr->saddr,
+		buffer, sizeof(buffer)));
+	printf(" %.3f ms ", (float)(now.tv_sec - g_e.prev.tv_sec) * 1000 +
 		(float)(now.tv_usec - g_e.prev.tv_usec) / 1000);
 	if (!(++g_e.sequence % g_e.probes))
 	{
 		printf("\n");
 		exit(0);
 	}
-	else
-		send_ping_request(g_e.client);
+	g_e.prev_addr = iphdr->saddr;
+	send_ping_request(g_e.client);
 }
 
 void	treat_icmphdr(struct iphdr *iphdr,

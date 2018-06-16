@@ -12,12 +12,6 @@
 
 #include "ft_traceroute.h"
 
-void	get_packet_size(t_env *env, char **args, int n)
-{
-	(void)n;
-	env->packet_size = ft_atou(args[0]);
-}
-
 void	get_timeout(t_env *env, char **args, int n)
 {
 	(void)n;
@@ -26,9 +20,14 @@ void	get_timeout(t_env *env, char **args, int n)
 
 void	print_usage(void)
 {
-	printf("Usage: ft_ping [-hv] [--help] [--interval interval]\n");
-	printf("               [--ttl ttl] [--packetsize packet_size]\n");
-	printf("               [--count count] [--timeout seconds] ");
-	printf("destination\n");
+	printf("Usage:\n  ft_traceroute [ -hv ] [ --help ] ");
+	printf("[--wait waittime] host [ packetlen ]\nOptions:\n");
+	printf("  %-27s Set the number of seconds to wait", "--wait waittime");
+	printf(" for response to\n%30sa probe (default is 5.0).", "");
+	printf(" Non-integer (float\n%30spoint) values allowed to\n", "");
+	printf("Arguments:\n+     host          The host to traceroute to\n");
+	printf("      packetlen     The full packet length (default is the");
+	printf(" length of an IP\n%20sheader plus 40). Can be ignored or", "");
+	printf(" increased to a minimal\n%20sallowed value\n", "");
 	exit(1);
 }

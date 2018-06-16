@@ -42,8 +42,8 @@ void	client_add(t_socket *socket, t_client *client)
 		client->write_type = WRITE_BY_ADDR;
 		freeaddrinfo(result);
 		g_e.client = client;
-		ft_printf("traceroute to %s (%s)\n",
-			g_e.address, get_client_addr(client));
+		ft_printf("traceroute to %s (%s), %hhu hops max, %lu byte packets\n",
+			g_e.address, get_client_addr(client), g_e.hops, g_e.packet_size);
 		send_ping_request(client);
 	}
 }

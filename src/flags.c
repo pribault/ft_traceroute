@@ -22,8 +22,8 @@ void	get_flags(int argc, char **argv)
 	static t_long_flag	long_flags[] = {
 		{"help", 0, {0}, (void *)&print_usage},
 		{"verbose", 0, {0}, (void *)&get_verbose},
-		{"packetsize", 1, {PARAM_UNSIGNED}, (void *)&get_packet_size},
-		{"timeout", 1, {PARAM_FLOAT}, (void *)&get_timeout},
+		{"wait", 1, {PARAM_FLOAT}, (void *)&get_timeout},
+		{"max-hops", 1, {PARAM_UNSIGNED}, (void *)get_max_hops},
 		{NULL, 0, {0}, NULL}
 	};
 
@@ -33,9 +33,31 @@ void	get_flags(int argc, char **argv)
 
 void	default_getter(char *s, t_env *env)
 {
-	if (env->address)
-		return (ft_error(2, ERROR_ADDRESS_SET, env->address));
-	env->address = s;
+	static int	state = 0;
+
+	if (!state)
+	{
+		env->address = s;
+		state++;
+	}
+	else if (state == 1)
+	{
+		if (!ft_isunsigned(s))
+			return (ft_error(2, ERROR_UNSIGNED, s));
+		g_e.packet_size = ft_atou(s);
+		if (g_e.packet_size < sizeof(struct iphdr) + sizeof(struct icmphdr))
+			g_e.packet_size = sizeof(struct iphdr) + sizeof(struct icmphdr);
+		state++;
+	}
+	else
+		return (ft_error(2, ERROR_ARGS_SET, env->address));
+}
+
+void	get_max_hops(t_env *env, char **args, int n)
+{
+	(void)env;
+	(void)n;
+	g_e.hops = ft_atou(args[0]);
 }
 
 void	get_verbose(t_env *env, char **args, int n)
